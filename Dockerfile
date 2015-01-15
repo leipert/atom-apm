@@ -1,10 +1,9 @@
-# VERSION: 0.1
 # DESCRIPTION:
-#   Install dependencies for the atom editor package testing - `apm test`.
+#   Install dependencies for the atom editor package testing `apm test`.
 # AUTHOR: Kenichi Kanai <kn1kn1@users.noreply.github.com>
 # USAGE:
-#   # Build the image
-#   docker build -t .
+#   See the usage in the actual package building.
+#   https://github.com/kn1kn1/language-context-free/blob/master/Dockerfile
 
 # Atom Docker Image For Package Testing
 FROM ubuntu:trusty
