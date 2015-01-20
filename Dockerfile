@@ -10,11 +10,13 @@ FROM ubuntu:trusty
 MAINTAINER Kenichi Kanai <kn1kn1@users.noreply.github.com>
 
 # Make Sure We're Up To Date
-RUN apt-get update
-RUN DEBIAN_FRONTEND=noninteractive apt-get dist-upgrade -y
+RUN \
+  apt-get update && \
+  DEBIAN_FRONTEND=noninteractive apt-get dist-upgrade -y
 
 # Install Required Packages For Atom
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
+RUN \
+  DEBIAN_FRONTEND=noninteractive apt-get install -y \
     git \
     gconf2 \
     gconf-service \
@@ -28,21 +30,27 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
     --no-install-recommends
 
 #  For downloading deb
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
+RUN \
+  DEBIAN_FRONTEND=noninteractive apt-get install -y \
     wget \
     ca-certificates \
     --no-install-recommends
 
 #  For apm install
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
+RUN \
+  DEBIAN_FRONTEND=noninteractive apt-get install -y \
     make \
     g++ \
     --no-install-recommends
 
 #  For apm test
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
+RUN  \
+  DEBIAN_FRONTEND=noninteractive apt-get install -y \
     xvfb \
     libasound2 \
     --no-install-recommends
+
+RUN \
+  rm -rf /var/lib/apt/lists/*
 
 CMD ["/bin/bash"]
