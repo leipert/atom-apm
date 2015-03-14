@@ -10,7 +10,7 @@ Comes with node, grunt & gulp preinstalled
 
 With docker:
 
-```docker
+```yml
 FROM leipert/atom-apm:latest
 # Add Package To `/root` Dir
 ENV HOME /root
@@ -18,8 +18,7 @@ ADD . $HOME
 WORKDIR /root
 
 # Install Package Dependencies
-RUN \
-  apm install
+RUN apm install
 
 # Start the Xvfb server with a display 99 and a virtual screen(monitor) 0.
 RUN \

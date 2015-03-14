@@ -17,20 +17,22 @@ RUN \
 RUN DEBIAN_FRONTEND=noninteractive apt-get -y install \
     python-software-properties software-properties-common curl
 
-# Add atom ppa
-RUN add-apt-repository ppa:webupd8team/atom
-
-# Add nodejs ppa and install
+# Add atom/nodejs ppa and install nodejs/atom
 RUN \
+  add-apt-repository ppa:webupd8team/atom && \
   curl -sL https://deb.nodesource.com/setup_0.12 | bash - && \
-  DEBIAN_FRONTEND=noninteractive apt-get install -y nodejs
-
-# Install Atom v0.187.0
-RUN \
-  DEBIAN_FRONTEND=noninteractive apt-get install atom=0.187.0-1~webupd8~0 -y
-
-RUN \
+  DEBIAN_FRONTEND=noninteractive apt-get install -y \
+    nodejs atom=0.187.0-1~webupd8~0 -y && \
   apm --version
 
 # Install gulp & grunt globally
 RUN npm i -g gulp grunt-cli
+
+# Cleanup
+RUN \
+  DEBIAN_FRONTEND=noninteractive \
+    apt-get -y purge \
+    python-software-properties software-properties-common curl apt-transport-https && \
+  DEBIAN_FRONTEND=noninteractive apt-get -y autoremove && \
+  DEBIAN_FRONTEND=noninteractive apt-get -y clean && \
+  npm cache clean
