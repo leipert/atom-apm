@@ -6,51 +6,31 @@
 #   https://github.com/kn1kn1/language-context-free/blob/master/Dockerfile
 
 # Atom Docker Image For Package Testing
-FROM ubuntu:trusty
-MAINTAINER Kenichi Kanai <kn1kn1@users.noreply.github.com>
+FROM kn1kn1/atom-apm-test:latest
+MAINTAINER Lukas Eipert <leipert@users.noreply.github.com>
 
 # Make Sure We're Up To Date
 RUN \
   apt-get update && \
   DEBIAN_FRONTEND=noninteractive apt-get dist-upgrade -y
 
-# Install Required Packages For Atom
-RUN \
-  DEBIAN_FRONTEND=noninteractive apt-get install -y \
-    git \
-    gconf2 \
-    gconf-service \
-    libgtk2.0-0 \
-    libnotify4 \
-    libxtst6 \
-    libnss3 \
-    python \
-    gvfs-bin \
-    xdg-utils \
-    --no-install-recommends
+RUN DEBIAN_FRONTEND=noninteractive apt-get -y install \
+    python-software-properties software-properties-common curl
 
-#  For downloading deb
-RUN \
-  DEBIAN_FRONTEND=noninteractive apt-get install -y \
-    wget \
-    ca-certificates \
-    --no-install-recommends
+# Add atom ppa
+RUN add-apt-repository ppa:webupd8team/atom
 
-#  For apm install
+# Add nodejs ppa and install
 RUN \
-  DEBIAN_FRONTEND=noninteractive apt-get install -y \
-    make \
-    g++ \
-    --no-install-recommends
+  curl -sL https://deb.nodesource.com/setup_0.12 | bash - && \
+  DEBIAN_FRONTEND=noninteractive apt-get install -y nodejs
 
-#  For apm test
-RUN  \
-  DEBIAN_FRONTEND=noninteractive apt-get install -y \
-    xvfb \
-    libasound2 \
-    --no-install-recommends
+# Install Atom v0.187.0
+RUN \
+  DEBIAN_FRONTEND=noninteractive apt-get install atom=0.187.0-1~webupd8~0 -y
 
 RUN \
-  rm -rf /var/lib/apt/lists/*
+  apm --version
 
-CMD ["/bin/bash"]
+# Install gulp & grunt globally
+RUN npm i -g gulp grunt-cli
