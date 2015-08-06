@@ -5,8 +5,7 @@ MAINTAINER Lukas Eipert <leipert@users.noreply.github.com>
 ADD ./dpkg-dep.sh .
 
 ENV downloadLink \
-https://github.com/atom/atom/releases/download/v0.189.0/atom-amd64.deb
-
+https://github.com/atom/atom/releases/download/v1.0.5/atom-amd64.deb
 
 ENV buildDependencies curl
 
