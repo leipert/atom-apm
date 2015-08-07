@@ -16,7 +16,7 @@ git push
 git checkout master
 git push
 git checkout gh-pages
-echo ${NAME} > index.html
+echo v${NAME} > index.html
 git commit -am "Bumped version to ${NAME}"
 git push
 git checkout master
